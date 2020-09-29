@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package grpc_poc;
+
+service Auth {
+  // Returns a response containing user information and JWT token OR a failure for a given
+  // authentication request
+  rpc AuthenticateUser (AuthenticationRequest) returns (AuthenticationResponse) {}
+}
+
+// A view model, belonging to a properly handled authentication response
+message User {
+    string username = 1;
+    string email = 2;
+}
+
+// The request containing the user email and password
+// This should eventually be more general (handle service accounts, passphrase/key combo, etc)
+message AuthenticationRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// A response to an authentication request
+// Should extend from a central "response" class, "success" is generally expected
+message AuthenticationResponse {
+  User user = 1;
+  string token = 2;
+}
+
