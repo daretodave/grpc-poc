@@ -6,6 +6,8 @@ service Auth {
   // Returns a response containing user information and JWT token OR a failure for a given
   // authentication request
   rpc AuthenticateUser (AuthenticationRequest) returns (AuthenticationResponse) {}
+  // Returns a response containing user information for a valid JWT, else fails
+  rpc AuthenticateToken (Session) returns (AuthenticationResponse) {}
 }
 
 // A view model, belonging to a properly handled authentication response
@@ -28,3 +30,7 @@ message AuthenticationResponse {
   string token = 2;
 }
 
+// A session should contain a JWT token property that is the encoded User
+message Session {
+  string token = 1;
+}
